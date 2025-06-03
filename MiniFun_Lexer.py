@@ -9,7 +9,7 @@ token_spec = [
     ('TRUE', r'\btrue\b'), ('FALSE', r'\bfalse\b'),
     ('INT', r'\d+'),
     ('ID', r'[a-zA-Z_][a-zA-Z0-9_]*'),
-    ('EQ', r'=='), ('NEQ', r'!='), ('AND', r'&&'), ('OR', r'\|\|'),
+    ('EQ', r'=='), ('NEQ', r'!='), ('AND', r'&&'), ('OR', r'\|\|'), ('MORETHAN', r'>'), ('LESSTHAN', r'<'),
     ('ARROW', r'=>'), ('ASSIGN', r'='),
     ('PLUS', r'\+'), ('MINUS', r'-'), ('MUL', r'\*'),
     ('LPAREN', r'\('), ('RPAREN', r'\)'),
@@ -31,3 +31,8 @@ def lexer(code):
             tokens.append((kind, value))
     return tokens
 
+if __name__ == "__main__":
+    code = "def suma(x, y) = x + y"
+    tokens = lexer(code)
+    for token in tokens:
+        print(token)
