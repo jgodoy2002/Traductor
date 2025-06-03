@@ -1,5 +1,5 @@
 Palabras clave: def, fun, if, then, else, map, filter, reduce
-Símbolos: (, ), =, =>, [, ], ,, +, -, *, ==, !=, &&, ||
+Símbolos: (, ), =, =>, [, ], ,, +, -, *, ==, !=, &&, ||, >, <
 Tipos: Int, Bool, List
 Identificadores: nombres de variables y funciones
 Literals: números, booleanos, listas
