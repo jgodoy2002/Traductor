@@ -1,0 +1,23 @@
+<program> ::= <function_def>+
+
+<function_def> ::= "def" <identifier> "(" <params>? ")" "=" <expression>
+
+<params> ::= <identifier> ("," <identifier>)*
+<args>   ::= <expression> ("," <expression>)*
+
+<expression> ::= <literal>
+               | <identifier>
+               | <expression> <operator> <expression>
+               | "if" <expression> "then" <expression> "else" <expression>
+               | "fun" "(" <params>? ")" "=>" <expression>     // función anónima
+               | <expression> "(" <args>? ")"                  // llamada
+               | "map" "(" <expression> "," <expression> ")"
+               | "filter" "(" <expression> "," <expression> ")"
+               | "reduce" "(" <expression> "," <expression> ")"
+
+<literal> ::= <int> | <bool> | <list>
+<int>     ::= [0-9]+
+<bool>    ::= "true" | "false"
+<list>    ::= "[" <expression> ("," <expression>)* "]"
+
+<operator> ::= "+" | "-" | "*" | "==" | "!=" | "&&" | "||"
