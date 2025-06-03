@@ -3,3 +3,13 @@ Símbolos: (, ), =, =>, [, ], ,, +, -, *, ==, !=, &&, ||
 Tipos: Int, Bool, List
 Identificadores: nombres de variables y funciones
 Literals: números, booleanos, listas
+
+"def" → palabra clave
+[a-zA-Z_][a-zA-Z0-9_]* → identificador
+[0-9]+ → entero
+"true" | "false" → booleanos
+"\(" → paréntesis izquierdo
+"\)" → paréntesis derecho
+"\[" → corchete izquierdo
+"\]" → corchete derecho
+"=>", "==", "!=", "&&", "||", "+", "-", "*" → operadores
