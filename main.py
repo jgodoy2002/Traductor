@@ -1,28 +1,39 @@
 from MiniFun_Parser import Parser
 from MiniFun_Lexer import lexer  
 
+from SemanticAnalyzer import SemanticAnalyzer
+
 def test_code(code):
-    print(f"\n=== Código: {code}")
+    print(f'Código a analizar: {code}')
     tokens = lexer(code)
     parser = Parser(tokens)
+
     try:
         ast = parser.parse()
-        print("AST:", ast)
+        print('Árbol de sintaxis abstracta (AST):')
+        print(ast)
+
+        analyzer = SemanticAnalyzer()
+        analyzer.analyze(ast)
+
+        print('Tabla de símbolos:')
+        print(analyzer.symbol_table.functions)
+
+        print('Errores encontrados:')
+        if analyzer.symbol_table.errors:
+            for error in analyzer.symbol_table.errors:
+                print(f'  - {error}')
+        else:
+            print('No se encontraron errores semánticos.')
     except Exception as e:
-        print("Error:", e)
+        print(f'Error de análisis: {e}')
 
 if __name__ == "__main__":
-    # Caso 1: Definición de función simple
+    # Pruebas
     code1 = "def suma(x, y) = x + y"
-    
-    # Caso 2: Expresión if
     code2 = "def max(a, b) = if a > b then a else b"
-    
-    # Caso 3: Función anónima y llamada
     code3 = "def apply(f, x) = f(x)"
-
-    # Caso 4: Función anonima sencila
-    code4 = "fun(x, y) => x + y"
+    code4 = "fun(x, y) => x + y"  # función anónima
 
     test_code(code1)
     test_code(code2)
