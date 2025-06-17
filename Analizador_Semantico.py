@@ -1,12 +1,12 @@
-class SymbolTable:
+class Tabla_Simbolos:
     def __init__(self):
         self.functions = {
             'suma': {'params': ['x', 'y'], 'type': 'function'},
             'resta': {'params': ['x', 'y'], 'type': 'function'},
             'multiplicacion': {'params': ['x', 'y'], 'type': 'function'},
             'division': {'params': ['x', 'y'], 'type': 'function'},
-            }  # nombre -> {'params': [...], 'type': 'func'}
-        self.globals = {}    # variables globales
+            } 
+        self.globals = {} 
         self.errors = []
 
     def declare_function(self, name, params):
@@ -34,20 +34,20 @@ class SymbolTable:
         if name not in scope and name not in self.globals:
             self.errors.append(f"Uso de variable no declarada: '{name}'")
 
-class SemanticAnalyzer:
+class Analizador_Semantico:
     def __init__(self):
-        self.symbol_table = SymbolTable()
+        self.simbolos_tabla = Tabla_Simbolos()
 
     def analyze(self, ast):
         for node in ast:
             if node[0] == 'function_def':
                 self.analyze_function_def(node)
             else:
-                self.check_expression(node, self.symbol_table.globals)
+                self.check_expression(node, self.simbolos_tabla.globals)
 
     def analyze_function_def(self, node):
         _, name, params, expr = node
-        self.symbol_table.declare_function(name, params)
+        self.simbolos_tabla.declare_function(name, params)
         local_scope = {param: {'type': 'param'} for param in params}
         self.check_expression(expr, local_scope)
 
@@ -57,21 +57,21 @@ class SemanticAnalyzer:
 
         elif expr[0] == 'id':
             var_name = expr[1]
-            self.symbol_table.check_variable(var_name, scope)
+            self.simbolos_tabla.check_variable(var_name, scope)
             return 'unknown'
 
         elif expr[0] == 'call':
             func_expr, args = expr[1], expr[2]
             if func_expr[0] != 'id':
-                self.symbol_table.errors.append("Llamada a función inválida")
+                self.simbolos_tabla.errors.append("Llamada a función inválida")
                 return
             func_name = func_expr[1]
-            if not self.symbol_table.is_function(func_name):
-                self.symbol_table.errors.append(f"Función no definida: '{func_name}'")
+            if not self.simbolos_tabla.is_function(func_name):
+                self.simbolos_tabla.errors.append(f"Función no definida: '{func_name}'")
                 return
-            expected = self.symbol_table.get_function_params(func_name)
+            expected = self.simbolos_tabla.get_function_params(func_name)
             if len(args) != len(expected):
-                self.symbol_table.errors.append(f"Número incorrecto de argumentos en llamada a '{func_name}'")
+                self.simbolos_tabla.errors.append(f"Número incorrecto de argumentos en llamada a '{func_name}'")
             for arg in args:
                 self.check_expression(arg, scope)
             return 'unknown'
@@ -91,9 +91,9 @@ class SemanticAnalyzer:
         elif expr[0] in ('plus', 'minus', 'mul', 'morethan', 'lessthan', 'eq'):
             left = self.check_expression(expr[1], scope)
             right = self.check_expression(expr[2], scope)
-            return 'int'  # asumiendo operaciones enteras
+            return 'int' 
 
         else:
-            self.symbol_table.errors.append(f"Expresión no reconocida: {expr}")
+            self.simbolos_tabla.errors.append(f"Expresión no reconocida: {expr}")
 
-analizador_semantico = SemanticAnalyzer()
+analizador_semantico = Analizador_Semantico()
