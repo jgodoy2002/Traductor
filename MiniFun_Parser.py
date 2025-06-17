@@ -84,6 +84,11 @@ class Parser:
         elif kind == 'FALSE':
             self.next_token('FALSE')
             return ('bool', False)
+        elif kind == 'LPAREN' :
+            self.next_token('LPAREN')
+            expr = self.parse_expression()
+            self.next_token('RPAREN')
+            return expr
         else:
             raise Exception(f"Error de sintaxis: expresión inesperada {kind}")
         

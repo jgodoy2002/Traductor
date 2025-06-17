@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # Casos de prueba
     pruebas = [
         "def suma(x, y) = x + y",
-        "def max(a, b) = if a > b then a else b",
+        "def max(a, b) = if (a > b) then a else b",
         "def apply(f, x) = f(x)",
         "fun(x, y) => x + y"
     ]
