@@ -89,9 +89,39 @@ class Analizador_Semantico:
             self.analizar_expr(cuerpo, ambito_lambda)
             return 'func'
 
+<<<<<<< HEAD
         elif tipo in ('plus', 'minus', 'mul', 'morethan', 'lessthan', 'eq'):
             self.analizar_expr(expr[1], scope)
             self.analizar_expr(expr[2], scope)
+=======
+        elif expr[0] in ('plus', 'minus', 'mul', 'morethan', 'lessthan', 'eq'):
+            left = self.check_expression(expr[1], scope)
+            right = self.check_expression(expr[2], scope)
+            return 'int' 
+        
+        elif expr[0] == 'map':
+            _, lista_expr, lambda_expr = expr
+            self.check_expression(lista_expr, scope)
+            lambda_type = self.check_expression(lambda_expr, scope)
+            if lambda_type != 'func':
+                self.simbolos_tabla.errors.append("Segundo argumento de 'map' debe ser una función lambda")
+            return 'list'
+
+        elif expr[0] == 'filter':
+            _, lista_expr, lambda_expr = expr
+            self.check_expression(lista_expr, scope)
+            lambda_type = self.check_expression(lambda_expr, scope)
+            if lambda_type != 'func':
+                self.simbolos_tabla.errors.append("Segundo argumento de 'filter' debe ser una función lambda")
+            return 'list'
+
+        elif expr[0] == 'reduce':
+            _, lista_expr, lambda_expr = expr
+            self.check_expression(lista_expr, scope)
+            lambda_type = self.check_expression(lambda_expr, scope)
+            if lambda_type != 'func':
+                self.simbolos_tabla.errors.append("Segundo argumento de 'reduce' debe ser una función lambda")
+>>>>>>> 528905a9bfc982800c82e0dd315770f7d63ac9b7
             return 'int'
 
         else:
