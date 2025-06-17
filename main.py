@@ -51,7 +51,10 @@ if __name__ == "__main__":
         "def suma(x, y) = x + y",
         "def max(a, b) = if a > b then a else b",
         "def apply(f, x) = f(x)",
-        "fun(x, y) => x + y"
+        "fun(x, y) => x + y",
+        "map(x, fun(x) => x * 2)",
+        "filter(x, fun(x) => x > 0)",
+        "reduce(x, fun(a, b) => a + b)"
     ]
 
     for code in pruebas:

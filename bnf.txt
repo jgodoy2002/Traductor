@@ -1,5 +1,5 @@
 <program> ::= <function_def>+ 
-            | <expression>
+            | <expression>+
 
 <function_def> ::= "def" <identifier> "(" <params>? ")" "=" <expression>
 
