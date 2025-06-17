@@ -40,7 +40,6 @@ class Analizador_Semantico:
         _, nombre, parametros, cuerpo = node
         self.simbolos_tabla.declare_function(nombre, parametros)
 
-        # Creamos el alcance local de la función
         ambito_local = {param: {'type': 'param'} for param in parametros}
         self.analizar_expr(cuerpo, ambito_local)
 
@@ -89,11 +88,10 @@ class Analizador_Semantico:
             self.analizar_expr(cuerpo, ambito_lambda)
             return 'func'
 
-<<<<<<< HEAD
         elif tipo in ('plus', 'minus', 'mul', 'morethan', 'lessthan', 'eq'):
             self.analizar_expr(expr[1], scope)
             self.analizar_expr(expr[2], scope)
-=======
+
         elif expr[0] in ('plus', 'minus', 'mul', 'morethan', 'lessthan', 'eq'):
             left = self.check_expression(expr[1], scope)
             right = self.check_expression(expr[2], scope)
@@ -121,7 +119,6 @@ class Analizador_Semantico:
             lambda_type = self.check_expression(lambda_expr, scope)
             if lambda_type != 'func':
                 self.simbolos_tabla.errors.append("Segundo argumento de 'reduce' debe ser una función lambda")
->>>>>>> 528905a9bfc982800c82e0dd315770f7d63ac9b7
             return 'int'
 
         else:
