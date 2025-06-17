@@ -21,7 +21,7 @@ class Parser:
         while self.current_token()[0] != 'EOF':
             if self.current_token()[0] == 'DEF':
                 functions.append(self.parse_function_def())
-            if self.current_token()[0] in ('FUN', 'MAP', 'FILTER', 'REDUCE'):
+            if self.current_token()[0] == 'FUN':
                 functions.append(self.parse_expression())
         return functions
     
@@ -47,34 +47,7 @@ class Parser:
     def parse_expression(self):
         if self.current_token()[0] == 'FUN':
             return self.parse_lambda()
-        
-        if self.current_token()[0] == 'MAP':
-            self.next_token('MAP')
-            self.next_token("LPAREN")
-            lista_expr = self.parse_expression()
-            self.next_token("COMMA")
-            lambda_expr = self.parse_expression()
-            self.next_token("RPAREN")
-            return ("map", lista_expr, lambda_expr) 
-        
-        if self.current_token()[0] == 'FILTER':
-            self.next_token('FILTER')
-            self.next_token("LPAREN")
-            lista_expr = self.parse_expression()
-            self.next_token("COMMA")
-            lambda_expr = self.parse_expression()
-            self.next_token("RPAREN")
-            return ("filter", lista_expr, lambda_expr) 
-        
-        if self.current_token()[0] == 'REDUCE':
-            self.next_token('REDUCE')
-            self.next_token("LPAREN")
-            lista_expr = self.parse_expression()
-            self.next_token("COMMA")
-            lambda_expr = self.parse_expression()
-            self.next_token("RPAREN")
-            return ("map", lista_expr, lambda_expr) 
- 
+
         if self.current_token()[0] == 'IF':
             self.next_token('IF')
             condicion = self.parse_expression()
