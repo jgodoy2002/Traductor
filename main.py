@@ -8,7 +8,7 @@ def separador():
 def imprimir_tabla(symbols):
     print("Tabla de símbolos:")
     for name, info in symbols.items():
-        params = ', '.join(info['params']) if 'params' in info else ''
+        params = ', '.join(f"{n}: {t}" for n, t in info['params']) if 'params' in info else ''
         tipo = info.get('type', 'desconocido')
         print(f"  - {name} ({tipo}) -> params: ({params})")
 
@@ -47,15 +47,22 @@ def test_code(code):
 
 if __name__ == "__main__":
     # Casos de prueba
-    pruebas = [
-        "def suma(x, y) = x + y",
-        "def max(a, b) = if (a > b) then a else b",
-        "def apply(f, x) = f(x)",
-        "fun(x, y) => x + y",
-        "map(x, fun(x) => x * 2)",
-        "filter(x, fun(x) => x > 0)",
-        "reduce(x, fun(a, b) => a + b)"
-    ]
+    pruebas = """
+    def f(float x) = x / 2
+    
+    def max(int a, int b) = if (a > b) then a else b
+    def apply(f, float x) = f(x)
+    fun(int x, int y) => x + y
+    def mayor_3(int x) = x > 3
 
-    for code in pruebas:
-        test_code(code)
+    def make_list(int x, int y, int z) = [x, y, z]
+    def empty_list() = []
+
+    def prueba_map() = map([1, 2, 3], fun(int x) => x * 2)
+    def prueba_filter() = filter([1, 2, 3, 4, 5], mayor_3)
+    def prueba_reduce() = reduce([1, 2, 3, 4], suma)
+
+    def factorial(int n) = if (n == 0) then 1 else n * factorial(n - 1)
+    """
+        
+    test_code(pruebas)
