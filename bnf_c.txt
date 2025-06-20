@@ -1,0 +1,53 @@
+<program> ::= <decl>*
+
+<decl> ::= <var_decl> ";"
+         | <func_decl>
+         | <struct_decl>
+
+<struct_decl> ::= "struct" <id> "{" <var_decl>* "}" ";"
+
+<var_decl> ::= <type> <id> ["=" <expr>]
+
+<func_decl> ::= <type> <id> "(" <param_list>? ")" "{" <stmt>* "}"
+
+<param_list> ::= <param> ("," <param>)*
+<param> ::= <type> <id>
+
+<type> ::= "int" | "bool" | <type> "[]" | "void" | <struct_type>
+<struct_type> ::= "struct" <id>
+
+<stmt> ::= <var_decl> ";"
+         | <assign_stmt> ";"
+         | <if_stmt>
+         | <while_stmt>
+         | <return_stmt> ";"
+         | <expr> ";"
+         | <block>
+
+<assign_stmt> ::= <id> "=" <expr>
+                | <id> "[" <expr> "]" "=" <expr>    // arreglo
+
+<if_stmt> ::= "if" "(" <expr> ")" <stmt> ["else" <stmt>]
+<while_stmt> ::= "while" "(" <expr> ")" <stmt>
+<return_stmt> ::= "return" <expr>
+<block> ::= "{" <stmt>* "}"
+
+<expr> ::= <int_lit> 
+         | <bool_lit>
+         | <id>
+         | <expr> "[" <expr> "]"                  // acceso arreglo
+         | <expr> <binop> <expr>
+         | <unop> <expr>
+         | <id> "(" <arg_list>? ")"               // llamada a función
+         | "(" <expr> ")"                         // agrupación
+
+<arg_list> ::= <expr> ("," <expr>)*
+
+<binop> ::= "+" | "-" | "*" | "/" | "%"
+          | "==" | "!=" | "<" | "<=" | ">" | ">="
+          | "&&" | "||"
+<unop> ::= "!" | "-"
+
+<int_lit> ::= [0-9]+
+<bool_lit> ::= "true" | "false"
+<id> ::= [a-zA-Z_][a-zA-Z0-9_]*
