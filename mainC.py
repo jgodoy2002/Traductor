@@ -1,5 +1,7 @@
 from MiniC_Lexer import lexer
 from MiniC_Parser import MiniCParser
+from C_Analizador import AnalizadorSemanticoC
+
 
 def separador():
     print("=" * 60)
@@ -8,6 +10,14 @@ def imprimir_ast(ast):
     print("Árbol de Sintaxis Abstracta (AST):")
     for nodo in ast:
         print(f"  {nodo}")
+
+def imprimir_errores_semanticos(errores):
+    print("\nErrores Semánticos:")
+    if errores:
+        for err in errores:
+            print(f"  - {err}")
+    else:
+        print("  :) No se encontraron errores semánticos.")
 
 def test_minic(codigo):
     separador()
@@ -22,11 +32,17 @@ def test_minic(codigo):
         
         parser = MiniCParser(tokens)
         ast = parser.parse()
-        
+
         print()
         imprimir_ast(ast)
+
+        # === Análisis Semántico ===
+        analizador = AnalizadorSemanticoC()
+        analizador.analizar(ast)
+        imprimir_errores_semanticos(analizador.tabla.errors)
+
     except Exception as e:
-        print(f"\n Error durante el análisis: {e}")
+        print(f"\nError durante el análisis: {e}")
 
 if __name__ == "__main__":
     ejemplo = """
@@ -37,6 +53,10 @@ if __name__ == "__main__":
 
     int suma(int a, int b) {
         return a + b;
+    }
+
+    int falla() {
+        return z;
     }
     """
 
